@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LAURITASAVA</title>
+<style>
+:root{--bg:#F8F4EF;--tx:#3a3330;--cd:#fff;--bd:#e3dbd0;--mu:#8a7d72;--im:#eadfd2;--bt:#3a3330;--bh:#6b5a4e;--bx:#fff}
+body.osc{--bg:#1e1b19;--tx:#efe8df;--cd:#2a2623;--bd:#3d3733;--mu:#b0a398;--im:#3a342f;--bt:#d9c7b0;--bh:#eadbc6;--bx:#1e1b19}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--tx)}
+header{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 30px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--bg);z-index:5}
+header h1{margin:0;letter-spacing:4px;font-size:20px;cursor:pointer}
+nav,.der{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,.bt{background:var(--bt);color:var(--bx);border:0;padding:9px 16px;border-radius:20px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;font-size:14px}
+button:hover,.bt:hover{background:var(--bh)}button:disabled{opacity:.4;cursor:not-allowed}
+button.l{background:none;color:var(--mu);text-decoration:underline;padding:0}
+button.s{background:none;color:var(--tx);border:1px solid var(--bd)}button.s:hover{background:var(--im)}
+nav button{background:none;color:var(--tx)}nav button:hover{background:var(--im)}nav button.on{border-bottom:2px solid var(--tx);border-radius:0}
+input,select{font-family:inherit;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--cd);color:var(--tx);width:100%}
+input[type=radio],input[type=checkbox]{width:auto}
+.vista{display:none;padding:30px 40px}.vista.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+@media(max-width:800px){.g4{grid-template-columns:repeat(2,1fr)}.vista{padding:20px}}
+.card{background:var(--cd);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h3{margin:10px 0 2px}.card small{display:block;color:var(--mu);margin-bottom:8px}.card button{margin:2px}
+.foto,.th{background:var(--im);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:54px;overflow:hidden}
+.foto{height:150px}.foto img,.th img{width:100%;height:100%;object-fit:cover}
+.th{width:50px;height:50px;font-size:22px;cursor:pointer;flex-shrink:0}
+.fv{position:absolute;top:10px;right:10px;background:var(--cd);color:#c0505a;padding:4px 9px;font-size:18px;border-radius:50%}
+.slide{display:flex;gap:30px;align-items:center;flex-wrap:wrap;background:var(--cd);border-radius:16px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.slide .foto{width:260px;height:220px;font-size:90px}.slide>div:last-child{flex:1;min-width:220px}
+.pts{text-align:center;margin:10px}.pts span{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bd);margin:0 4px;cursor:pointer}.pts .a{background:var(--tx)}
+h2.t{margin:36px 0 14px}
+.filtros{display:grid;grid-template-columns:2fr 1fr auto;gap:12px;align-items:center;background:var(--cd);padding:14px;border-radius:12px;margin-bottom:20px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:800px){.cols{grid-template-columns:1fr}}
+.caja{background:var(--cd);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+iframe{width:100%;height:260px;border:0;border-radius:8px}
+.redes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.red{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:18px;text-align:center;color:var(--tx);text-decoration:none}
+.red span{font-size:32px;display:block}.red small{color:var(--mu)}
+.md{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:30;padding:20px;overflow:auto}
+.cj{background:var(--cd);border-radius:12px;padding:20px;width:400px;max-width:100%;max-height:100%;overflow:auto}
+.cj input{margin:6px 0}label.op{display:block;margin:6px 0}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.3s;z-index:9}#ov.a{opacity:1;pointer-events:auto}
+#pn{position:fixed;top:0;right:0;height:100%;width:380px;max-width:100%;background:var(--cd);transform:translateX(100%);transition:.3s;display:flex;flex-direction:column;z-index:10}#pn.a{transform:none}
+.cab,.pie{padding:18px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center}.pie{border:0;border-top:1px solid var(--bd);display:block}
+#it{flex:1;overflow:auto;padding:8px 18px}.item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--bd)}
+.item .th{width:46px;height:46px}.item .in{flex:1}.item small{color:var(--mu);display:block}
+.ct{display:flex;align-items:center;gap:6px}.ct button{width:26px;height:26px;padding:0;border-radius:50%}
+.tot{display:flex;justify-content:space-between;font-size:20px;margin-bottom:12px}.pie button:not(.l){width:100%}
+#ad{position:fixed;inset:0;background:var(--bg);overflow:auto;display:none;z-index:20;padding:26px 36px}
+.pr{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd)}.pr input,.pr select{width:auto}
+.bajo .st{background:#fde8e8;color:#333}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}.logo h1{margin:0}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.cat{height:120px;border-radius:16px;background:linear-gradient(135deg,#2e8b57,#58b883);color:#fff;font-size:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:.2s}
+.cat:hover{transform:translateY(-4px);background:linear-gradient(135deg,#277a4c,#4aa874)}
+.cat small{font-size:13px;opacity:.9}
+#ad{padding:0}.adw{display:flex;min-height:100%}
+.adm{width:210px;background:var(--cd);border-right:1px solid var(--bd);padding:18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;flex-shrink:0}
+.adm button{background:none;color:var(--tx);text-align:left;border-radius:10px}.adm button:hover{background:var(--im)}
+.adm button.on{background:#2e8b57;color:#fff}
+.adc{flex:1;padding:26px 30px;min-width:0}.tp{display:none}
+.stats,.pg,.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.stat{background:var(--cd);border-radius:14px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:4px;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.stat:hover{transform:translateY(-3px)}.stat span{font-size:28px}.stat b{font-size:26px}.stat small{color:var(--mu)}
+.pc{background:var(--cd);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.pc.bajo{outline:2px solid #d98a8a}.r2{display:flex;gap:8px;align-items:center}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2e8b57;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:.3s;z-index:50;pointer-events:none}
+@media(max-width:800px){.adw{flex-direction:column}.adm{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap}.adc{padding:16px}}
+</style></head><body>
+<header>
+<div class="logo" onclick="ir('inicio')">
+<svg width="40" height="40" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#2e8b57"/><path d="M13 34C13 20 22 12 36 12c0 14-9 22-23 22z" fill="#c8efd8"/><path d="M14 35L31 18" stroke="#2e8b57" stroke-width="2.2" stroke-linecap="round"/></svg>
+<h1>LAURITASAVA</h1></div>
+<nav><button data-v="inicio" onclick="ir('inicio')">Inicio</button><button data-v="tienda" onclick="ir('tienda')">Tienda</button><button data-v="favs" onclick="ir('favs')">Favoritos</button><button data-v="sobre" onclick="ir('sobre')">Sobre la tienda</button></nav>
+<input id="bq" placeholder="🔍 Buscar productos..." style="max-width:220px" onkeydown="if(event.key==='Enter'){$('tq').value=this.value;ir('tienda')}">
+<div class="der"><button class="s" onclick="tema()" title="Tema oscuro">🌓</button><button onclick="abrirC()">🛒 Carrito (<span id="cn">0</span>)</button><span id="cu"></span></div>
+</header>
+
+<main id="v-inicio" class="vista on">
+<div id="sl"></div>
+<div style="text-align:center;margin-top:30px"><h2 id="fr" style="font-size:30px;margin:0 0 6px"></h2><p id="sb" style="color:var(--mu);margin:0"></p></div>
+<h2 class="t">Categorías</h2><div id="cb" class="cats"></div>
+<h2 class="t">Productos destacados</h2><div class="g4" id="dg"></div>
+</main>
+<main id="v-tienda" class="vista">
+<div class="filtros"><input id="tq" placeholder="Buscar en la tienda..." oninput="pTienda()"><select id="tc" onchange="pTienda()"></select><label><input type="checkbox" id="td" onchange="pTienda()"> Solo disponibles</label></div>
+<div class="grid" id="tg"></div>
+</main>
+<main id="v-favs" class="vista"><h2 style="margin-top:0">Mis favoritos</h2><div class="grid" id="fg"></div></main>
+<main id="v-sobre" class="vista">
+<h2 style="margin-top:0">Sobre la tienda</h2><p id="sobreT"></p>
+<div class="cols"><div class="caja"><h3>📍 Ubicación</h3><div id="mapa"></div></div><div class="caja"><h3>Contáctanos</h3><div id="contacto"></div></div></div>
+<h3>Nuestras redes</h3><div class="redes" id="redes"></div>
+</main>
+<footer style="text-align:center;padding:20px"><button class="l" onclick="abrirLogin()">Administrador</button></footer>
+
+<div id="ov" onclick="cerrarC()"></div>
+<aside id="pn"><div class="cab"><h2 style="margin:0">Tu carrito</h2><button class="l" onclick="cerrarC()">✕</button></div><div id="it"></div>
+<div class="pie"><div class="tot"><span>Total</span><b>S/ <span id="tt">0.00</span></b></div><button onclick="abrirPago()">Finalizar pedido</button><p style="text-align:center;margin:10px 0 0"><button class="l" onclick="vaciar()">Vaciar carrito</button></p></div></aside>
+
+<div class="md" id="det"><div class="cj" id="dt"></div></div>
+<div class="md" id="auth"><div class="cj" style="width:340px"><h3 id="aT"></h3><input id="aN" placeholder="Nombre"><input id="aM" type="email" placeholder="Correo"><input id="aP" type="password" placeholder="Contraseña (mín. 6)" onkeydown="if(event.key==='Enter')enviarAuth()"><p id="aE" style="color:#c0505a"></p><div id="aV" style="display:none"><button onclick="yaVerifique()">Ya verifiqué mi correo</button> <button class="s" onclick="reenviar()">Reenviar correo</button><p style="color:var(--mu);font-size:13px">Revisa también la carpeta de spam.</p></div><button id="aB" onclick="enviarAuth()">Continuar</button> <button class="l" id="aOl" onclick="olvide()">¿Olvidaste tu contraseña?</button> <button class="l" onclick="cerrarM('auth')">Cancelar</button></div></div>
+<div class="md" id="pago"><div class="cj"><h3>Finalizar pedido</h3>
+<input id="pN" placeholder="Nombre"><input id="pT" type="tel" placeholder="Teléfono">
+<p><b>Entrega</b></p><label class="op"><input type="radio" name="entrega" value="recojo" checked onchange="aPago()"> Recojo en tienda</label><label class="op"><input type="radio" name="entrega" value="envio" onchange="aPago()"> Envío a domicilio</label>
+<div id="bEnvio" style="display:none"><input id="pD" placeholder="Dirección y referencia"><button type="button" class="l" onclick="ubicacion()">📍 Usar mi ubicación actual</button> <span id="uOk"></span></div>
+<p><b>Pago</b></p><label class="op"><input type="radio" name="metodo" value="Efectivo" checked onchange="aPago()"> Efectivo</label><label class="op"><input type="radio" name="metodo" value="Yape" onchange="aPago()"> Yape</label>
+<p id="aY" style="display:none;background:var(--im);padding:10px;border-radius:8px"></p>
+<button id="bConf" onclick="confirmar()">Confirmar pedido</button> <button class="l" onclick="cerrarM('pago')">Cancelar</button></div></div>
+<div class="md" id="login"><div class="cj" style="width:320px"><h3>Acceso administrador</h3><input id="lE" type="email" placeholder="Correo del administrador"><input type="password" id="clave" placeholder="Contraseña" onkeydown="if(event.key==='Enter')entrar()"><p id="eL" style="color:#c0505a"></p><button onclick="entrar()">Entrar</button> <button class="l" onclick="cerrarM('login')">Cancelar</button></div></div>
+
+<div id="ad"><div class="adw">
+<aside class="adm">
+<div class="logo" style="margin-bottom:14px"><svg width="34" height="34" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#2e8b57"/><path d="M13 34C13 20 22 12 36 12c0 14-9 22-23 22z" fill="#c8efd8"/><path d="M14 35L31 18" stroke="#2e8b57" stroke-width="2.2" stroke-linecap="round"/></svg><b>Admin</b></div>
+<button data-t="res" onclick="tab('res')">📊 Resumen</button>
+<button data-t="prod" onclick="tab('prod')">📦 Productos</button>
+<button data-t="cat" onclick="tab('cat')">🏷️ Categorías</button>
+<button data-t="por" onclick="tab('por')">🖼️ Portada</button>
+<button data-t="tie" onclick="tab('tie')">🏪 Tienda</button>
+<button data-t="ped" onclick="tab('ped')">🧾 Pedidos <span id="nPed"></span></button>
+<button class="s" style="margin-top:auto" onclick="salirAd()">← Salir</button>
+</aside>
+<section class="adc">
+<div class="tp" id="t-res"><h2 style="margin-top:0">Resumen</h2><div class="stats" id="stats"></div></div>
+<div class="tp" id="t-prod"><h2 style="margin-top:0">Productos</h2>
+<div class="caja"><h3>➕ Nuevo producto</h3><div class="r2" style="flex-wrap:wrap"><input id="nN" placeholder="Nombre" style="flex:1;min-width:140px"><input id="nP" type="number" placeholder="Precio" style="width:100px"><input id="nS" type="number" placeholder="Stock" style="width:90px"><input id="nI" placeholder="Emoji" style="width:80px"><button onclick="addProd()">Agregar</button></div></div>
+<div class="pg" id="pg"></div></div>
+<div class="tp" id="t-cat"><h2 style="margin-top:0">Categorías</h2><div class="caja r2"><input id="nc" placeholder="Nueva categoría"><button onclick="addCat()">Añadir</button></div><div class="cats" id="catAd"></div></div>
+<div class="tp" id="t-por"><h2 style="margin-top:0">Portada</h2>
+<div class="caja"><h3>Textos</h3><div id="campP"></div><p><button onclick="guardarCampos()">Guardar</button></p></div>
+<div class="caja"><h3>Carrusel (4 productos)</h3><div class="sg" id="slAd"></div></div></div>
+<div class="tp" id="t-tie"><h2 style="margin-top:0">Tienda</h2><div class="caja"><div id="campT"></div><p><button onclick="guardarCampos()">Guardar</button></p></div></div>
+<div class="tp" id="t-ped"><h2 style="margin-top:0">Pedidos</h2><div id="ped"></div></div>
+</section></div></div>
+<div id="toast"></div>
+
+<script>
+const base={frase:"Productos bonitos para personas felices",sub:"Detalles que hacen especial tu día",sobre:"",yape:"",whatsapp:"",canal:"",ubic:"",ig:"",fb:"",tt:"",cats:["Regalos","Hogar"],slides:[1,2,3,4],pedidos:[],users:{},
+productos:[{id:1,nombre:"Producto 1",precio:25,icono:"🕯️",stock:10,img:"",desc:"Descripción del producto.",cat:"Hogar",dest:true},{id:2,nombre:"Producto 2",precio:40,icono:"🧸",stock:5,img:"",desc:"Descripción del producto.",cat:"Regalos",dest:true},{id:3,nombre:"Producto 3",precio:18,icono:"🌸",stock:8,img:"",desc:"Descripción del producto.",cat:"Regalos",dest:true},{id:4,nombre:"Producto 4",precio:55,icono:"🎁",stock:3,img:"",desc:"Descripción del producto.",cat:"Hogar",dest:true}]};
+let D={...base,productos:[],pedidos:[],fav:[],cuentas:0}; // productos, pedidos y cuentas vienen de Firebase
+let U="",NOM="",VER=false;
+const C={};let vista="inicio",si=0,modo="login",irPago=false,ubi="";
+const $=id=>document.getElementById(id);
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const foto=p=>p.img?`<img src="${p.img}" alt="">`:esc(p.icono);
+const px=n=>(+n).toFixed(2);
+function save(){}
+function tema(){document.body.classList.toggle("osc");localStorage.setItem("tema",document.body.classList.contains("osc")?"1":"")}
+function ir(v){vista=v;document.querySelectorAll(".vista").forEach(e=>e.classList.toggle("on",e.id=="v-"+v));pintar();scrollTo(0,0)}
+function irCat(i){$("tc").value=D.cats[i];ir("tienda")}
+function cerrarM(id){$(id).style.display="none"}
+const esFav=id=>D.fav.includes(id);
+function fav(id){if(!U)return abrirAuth("login","Inicia sesión para guardar favoritos");guardarFav(id)}
+const card=p=>{const s=p.stock<=0;return`<div class="card"><button class="fv" onclick="fav(${p.id})">${esFav(p.id)?"♥":"♡"}</button><div class="foto" style="cursor:pointer" onclick="det(${p.id})">${foto(p)}</div><h3>${esc(p.nombre)}</h3><p style="margin:0">S/ ${px(p.precio)}</p><small>${s?"Agotado":"Disponibles: "+p.stock}</small><button class="s" onclick="det(${p.id})">Ver más</button><button ${s||(C[p.id]||0)>=p.stock?"disabled":""} onclick="cambiar(${p.id},1)">Agregar</button></div>`};
+
+/* ---- vistas ---- */
+function pintar(){pInicio();pTienda();pFavs();pSobre();dCarrito();cuentaUI();document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v==vista))}
+function pInicio(){$("fr").textContent=D.frase;$("sb").textContent=D.sub;
+$("cb").innerHTML=D.cats.map((c,i)=>`<button class="cat" onclick="irCat(${i})">${esc(c)}<small>${D.productos.filter(p=>p.cat==c).length} productos</small></button>`).join("")||"<small>Sin categorías</small>";
+$("dg").innerHTML=D.productos.filter(p=>p.dest).slice(0,4).map(card).join("")||'<p style="color:var(--mu)">Aún no hay productos destacados.</p>';pSlide()}
+function pSlide(){const l=D.slides.map(i=>D.productos.find(p=>p.id==i)).filter(Boolean);if(!l.length){$("sl").innerHTML="";return}
+const k=si%l.length,p=l[k];$("sl").innerHTML=`<div class="slide"><div class="foto">${foto(p)}</div><div><h2 style="margin-top:0">${esc(p.nombre)}</h2><p>${esc((p.desc||"").slice(0,140))}</p><p><b>S/ ${px(p.precio)}</b></p><button onclick="det(${p.id})">Ver más</button></div></div><div class="pts">${l.map((_,i)=>`<span class="${i==k?"a":""}" onclick="si=${i};pSlide()"></span>`).join("")}</div>`}
+setInterval(()=>{si++;pSlide()},4500);
+function pTienda(){const c=$("tc").value;$("tc").innerHTML='<option value="">Todas las categorías</option>'+D.cats.map(x=>`<option ${x==c?"selected":""}>${esc(x)}</option>`).join("");
+const q=$("tq").value.toLowerCase(),d=$("td").checked;
+const l=D.productos.filter(p=>(!q||((p.nombre||"")+" "+(p.desc||"")).toLowerCase().includes(q))&&(!c||p.cat==c)&&(!d||p.stock>0));
+$("tg").innerHTML=l.map(card).join("")||"<p>No hay productos con esos filtros.</p>"}
+function pFavs(){$("fg").innerHTML=!U?"<p>Inicia sesión para ver tus favoritos.</p>":D.productos.filter(p=>esFav(p.id)).map(card).join("")||"<p>Aún no tienes favoritos. Toca el ♡ en un producto.</p>"}
+function pSobre(){$("sobreT").textContent=D.sobre||"";
+$("mapa").innerHTML=D.ubic?`<iframe src="https://maps.google.com/maps?q=${encodeURIComponent(D.ubic)}&output=embed" loading="lazy"></iframe><p>${esc(D.ubic)}</p>`:"<p>Ubicación pendiente.</p>";
+$("contacto").innerHTML=(D.whatsapp?`<p>📱 WhatsApp: +${esc(D.whatsapp)}</p><a class="bt" target="_blank" href="https://wa.me/${esc(D.whatsapp)}">Escribir por WhatsApp</a> `:"")+(D.canal?`<a class="bt" target="_blank" href="${esc(D.canal)}">Unirme al canal</a>`:"")||"<p>Contacto pendiente.</p>";
+$("redes").innerHTML=[["📸","Instagram","ig"],["👍","Facebook","fb"],["🎵","TikTok","tt"]].map(([i,n,k])=>`<a class="red" ${D[k]?`href="${esc(D[k])}" target="_blank"`:""}><span>${i}</span><b>${n}</b><br><small>${D[k]?"Visitar":"Próximamente"}</small></a>`).join("")}
+function det(id){const p=D.productos.find(x=>x.id==id);if(!p)return;
+$("dt").innerHTML=`<div class="foto" style="height:230px">${foto(p)}</div><h2>${esc(p.nombre)}</h2>${p.cat?`<small style="color:var(--mu)">${esc(p.cat)}</small>`:""}<p>${esc(p.desc||"Sin descripción.")}</p><p><b>S/ ${px(p.precio)}</b> · ${p.stock>0?"Stock: "+p.stock:"Agotado"}</p><button ${p.stock<=0||(C[id]||0)>=p.stock?"disabled":""} onclick="cambiar(${id},1)">Agregar al carrito</button> <button class="s" onclick="fav(${id})">${esFav(id)?"♥ En favoritos":"♡ Favorito"}</button> <button class="l" onclick="cerrarM('det')">Cerrar</button>`;$("det").style.display="flex"}
+
+/* ---- cuenta (Firebase) ---- */
+function cuentaUI(){$("cu").innerHTML=U?`Hola, ${esc(NOM)} <button class="s" onclick="salirC()">Salir</button>`:'<button class="s" onclick="abrirAuth(\'login\')">Iniciar sesión</button> <button onclick="abrirAuth(\'reg\')">Crear cuenta</button>'}
+function abrirAuth(m,msg){modo=m;const v=m=="ver";$("aT").textContent=m=="login"?"Iniciar sesión":m=="reg"?"Crear cuenta":"Verifica tu correo";
+$("aN").style.display=m=="reg"?"block":"none";$("aM").style.display=$("aP").style.display=v?"none":"block";
+$("aV").style.display=v?"block":"none";$("aB").style.display=v?"none":"inline-block";$("aOl").style.display=m=="login"?"inline":"none";
+$("aE").style.color=v?"#2e8b57":"#c0505a";$("aE").textContent=msg||"";$("auth").style.display="flex"}
+
+/* ---- carrito ---- */
+function cambiar(id,d){const p=D.productos.find(x=>x.id===id);if(!p)return;const q=Math.min((C[id]||0)+d,p.stock);q<=0?delete C[id]:C[id]=q;pintar();if($("det").style.display=="flex")det(id)}
+function quitar(id){delete C[id];pintar()}
+function vaciar(){for(const k in C)delete C[k];pintar()}
+function dCarrito(){let t=0,n=0;const h=Object.keys(C).map(k=>{const p=D.productos.find(x=>x.id==k);if(!p){delete C[k];return""}if(C[k]>p.stock)C[k]=p.stock;const q=C[k];t+=p.precio*q;n+=q;
+return`<div class="item"><div class="th">${foto(p)}</div><div class="in"><b>${esc(p.nombre)}</b><small>S/ ${px(p.precio)} · Subtotal S/ ${px(p.precio*q)}</small></div><div class="ct"><button onclick="cambiar(${p.id},-1)">−</button>${q}<button ${q>=p.stock?"disabled":""} onclick="cambiar(${p.id},1)">+</button></div><button class="l" style="color:#c0505a" onclick="quitar(${p.id})" title="Quitar">🗑</button></div>`}).join("");
+$("it").innerHTML=h||'<p style="text-align:center;color:var(--mu);margin-top:40px">Tu carrito está vacío</p>';$("cn").textContent=n;$("tt").textContent=px(t)}
+function abrirC(){$("pn").classList.add("a");$("ov").classList.add("a")}
+function cerrarC(){$("pn").classList.remove("a");$("ov").classList.remove("a")}
+
+/* ---- compra ---- */
+const val=n=>document.querySelector(`input[name=${n}]:checked`).value;
+function abrirPago(){if(!Object.keys(C).length)return alert("Tu carrito está vacío");cerrarC();
+if(!U){irPago=true;return abrirAuth("reg","Crea una cuenta o inicia sesión para comprar")}
+if(!VER){irPago=true;return abrirAuth("ver","Verifica tu correo para poder comprar. Te enviamos un enlace al registrarte.")}
+$("pN").value=$("pN").value||NOM;$("pago").style.display="flex";aPago()}
+function aPago(){$("bEnvio").style.display=val("entrega")=="envio"?"block":"none";const y=$("aY");y.style.display=val("metodo")=="Yape"?"block":"none";y.textContent=D.yape?`Yapea el total al ${D.yape} y envía la captura por WhatsApp.`:"Te enviaremos el número de Yape al confirmar."}
+function ubicacion(){if(!navigator.geolocation)return alert("Tu navegador no permite obtener la ubicación");navigator.geolocation.getCurrentPosition(p=>{ubi=`https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`;$("uOk").textContent="✓ añadida"},()=>alert("No se pudo obtener la ubicación. Escribe tu dirección."))}
+async function confirmar(){const n=$("pN").value.trim(),t=$("pT").value.trim(),d=$("pD").value.trim(),env=val("entrega")=="envio",m=val("metodo");
+if(!n||!t)return alert("Completa tu nombre y teléfono");if(env&&!d&&!ubi)return alert("Escribe tu dirección o usa tu ubicación");
+const b=$("bConf");b.disabled=true;b.textContent="Registrando...";
+const ent=env?"Envío: "+d+(ubi?" "+ubi:""):"Recojo en tienda";let r;
+try{r=await crearPedido({cliente:n,tel:t,entrega:ent,pago:m},{...C})}catch(e){b.disabled=false;b.textContent="Confirmar pedido";return alert(e.message||"No se pudo registrar el pedido")}
+b.disabled=false;b.textContent="Confirmar pedido";
+const msg=`Pedido LAURITASAVA N° ${r.num}\nCliente: ${n} (${t})\n${r.items.map(i=>"• "+i).join("\n")}\nTotal: S/ ${r.total}\nEntrega: ${ent}\nPago: ${m}`;
+vaciar();cerrarM("pago");
+$("dt").innerHTML=`<h2>¡Pedido registrado!</h2><p>Tu pedido N° <b>${r.num}</b> por <b>S/ ${r.total}</b> quedó guardado.</p>${m=="Yape"&&D.yape?`<p>Yapea el total al <b>${esc(D.yape)}</b> y envía la captura por WhatsApp.</p>`:""}${D.whatsapp?`<p><a class="bt" target="_blank" href="https://wa.me/${esc(D.whatsapp)}?text=${encodeURIComponent(msg)}">Enviar detalle por WhatsApp</a></p>`:""}<button class="l" onclick="cerrarM('det')">Cerrar</button>`;$("det").style.display="flex"}
+
+/* ---- administrador (las acciones que guardan datos están en el bloque de Firebase, más abajo) ---- */
+const CP=[["frase","Frase principal"],["sub","Frase secundaria"],["sobre","Texto 'Sobre la tienda'"]];
+const CT=[["ubic","Ubicación (dirección para el mapa)"],["whatsapp","WhatsApp (con código de país, sin +)"],["canal","Enlace del canal de WhatsApp"],["yape","Número de Yape"],["ig","Enlace de Instagram"],["fb","Enlace de Facebook"],["tt","Enlace de TikTok"]];
+function toast(t){const e=$("toast");e.textContent=t;e.style.opacity=1;setTimeout(()=>e.style.opacity=0,1800)}
+function tab(t){document.querySelectorAll(".tp").forEach(e=>e.style.display=e.id=="t-"+t?"block":"none");document.querySelectorAll(".adm button[data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t==t))}
+function abrirLogin(){$("clave").value="";$("eL").textContent="";$("login").style.display="flex"}
+function dAd(){
+const un=D.productos.reduce((s,p)=>s+p.stock,0),va=D.productos.reduce((s,p)=>s+p.stock*p.precio,0),bj=D.productos.filter(p=>p.stock<=3).length;
+$("stats").innerHTML=[["📦",D.productos.length,"Productos","prod"],["🔢",un,"Unidades en stock","prod"],["💰","S/ "+px(va),"Valor del inventario","prod"],["⚠️",bj,"Con stock bajo","prod"],["🧾",D.pedidos.length,"Pedidos","ped"],["👤",D.cuentas,"Cuentas","res"]].map(([i,n,l,t])=>`<div class="stat" onclick="tab('${t}')"><span>${i}</span><b>${n}</b><small>${l}</small></div>`).join("");
+$("nPed").textContent=D.pedidos.filter(o=>o.estado=="Pendiente").length||"";
+const opc=p=>D.productos.map(x=>`<option value="${x.id}" ${x.id==p?"selected":""}>${esc(x.nombre)}</option>`).join("");
+$("slAd").innerHTML=[0,1,2,3].map(i=>`<div class="caja" style="margin:0"><small>Imagen ${i+1}</small><select onchange="D.slides[${i}]=+this.value;save()">${opc(D.slides[i])}</select></div>`).join("");
+$("catAd").innerHTML=D.cats.map((c,i)=>`<div class="cat">${esc(c)}<small>${D.productos.filter(p=>p.cat==c).length} productos</small><button class="l" style="color:#fff" onclick="delCat(${i})">✕ Eliminar</button></div>`).join("")||"<p>Aún no hay categorías.</p>";
+$("pg").innerHTML=D.productos.map(p=>`<div class="pc ${p.stock<=3?"bajo":""}">
+<label class="foto" style="height:130px;cursor:pointer;${p.img?"":"font-size:16px"}">${p.img?`<img src="${p.img}" alt="">`:"📷 Subir foto"}<input type="file" accept="image/*" hidden onchange="subirFoto(${p.id},this)"></label>
+<div class="r2"><input style="width:56px" value="${esc(p.icono)}" onchange="ed(${p.id},'icono',this.value)"><input value="${esc(p.nombre)}" onchange="ed(${p.id},'nombre',this.value)"></div>
+<div class="r2"><input type="number" step="0.01" value="${p.precio}" onchange="ed(${p.id},'precio',this.value)"><div class="ct"><button onclick="ed(${p.id},'stock',${p.stock-1})">−</button><b>${p.stock}</b><button onclick="ed(${p.id},'stock',${p.stock+1})">+</button></div></div>
+<select onchange="ed(${p.id},'cat',this.value)"><option value="">Sin categoría</option>${D.cats.map(c=>`<option ${p.cat==c?"selected":""}>${esc(c)}</option>`).join("")}</select>
+<input placeholder="Descripción" value="${esc(p.desc)}" onchange="ed(${p.id},'desc',this.value)">
+<label><input type="checkbox" ${p.dest?"checked":""} onchange="ed(${p.id},'dest',this.checked)"> ⭐ Destacado</label>
+<div class="r2">${p.img?`<button class="l" onclick="ed(${p.id},'img','')">quitar foto</button>`:""}<button class="l" style="color:#c0505a;margin-left:auto" onclick="borrar(${p.id})">🗑 Eliminar</button></div></div>`).join("");
+$("ped").innerHTML=D.pedidos.map(o=>`<div class="caja"><div class="r2" style="justify-content:space-between;flex-wrap:wrap"><span><b>N° ${esc(String(o.id).slice(0,6).toUpperCase())}</b> · ${esc(o.fecha)}</span><select style="width:auto" onchange="estadoPed('${esc(o.id)}',this.value)">${["Pendiente","Pagado","Entregado","Cancelado"].map(x=>`<option ${o.estado==x?"selected":""}>${x}</option>`).join("")}</select></div><p style="margin:8px 0 2px">${esc(o.cliente)} (${esc(o.tel)})<br><small>${esc(o.correo)}</small></p><p>${o.items.map(esc).join("<br>")}</p><b>Total S/ ${esc(o.total)}</b> · ${esc(o.entrega)} · ${esc(o.pago)}</div>`).join("")||"<p>Aún no hay pedidos.</p>"}
+function subirFoto(id,inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const e=Math.min(1,500/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*e;c.height=im.height*e;c.getContext("2d").drawImage(im,0,0,c.width,c.height);ed(id,"img",c.toDataURL("image/jpeg",.75))};im.src=r.result};r.readAsDataURL(f)}
+if(localStorage.getItem("tema"))document.body.classList.add("osc");
+pintar();
+</script>
+
+<!-- ====== FIREBASE: login del administrador y datos de la tienda en línea ====== -->
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,collection,onSnapshot,setDoc,updateDoc,deleteDoc,writeBatch,runTransaction} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app=initializeApp({apiKey:"AIzaSyBambSsC4btWhoAPG277F4FRZMuBvuU9K4",authDomain:"lauritasava.firebaseapp.com",projectId:"lauritasava",storageBucket:"lauritasava.firebasestorage.app",messagingSenderId:"267280878627",appId:"1:267280878627:web:d65c32e3e6736a658af596"});
+const auth=getAuth(app),db=getFirestore(app),datos=doc(db,"tienda","datos"),P=id=>doc(db,"productos",String(id));
+let admin=false,pListo=false,uFav=null,uPed=null,uUsu=null;
+const fail=e=>alert("No se pudo guardar. ¿Iniciaste sesión como administrador? ("+(e.code||e.message)+")");
+const refrescar=()=>{pintar();if($("ad").style.display=="block")dAd()};
+const msj=(t,ok)=>{$("aE").textContent=t;$("aE").style.color=ok?"#2e8b57":"#c0505a"};
+const errAuth=c=>({"auth/email-already-in-use":"Ese correo ya tiene cuenta","auth/invalid-credential":"Correo o contraseña incorrectos","auth/wrong-password":"Correo o contraseña incorrectos","auth/user-not-found":"Correo o contraseña incorrectos","auth/invalid-email":"Correo no válido","auth/weak-password":"La contraseña es muy débil (mín. 6 caracteres)","auth/too-many-requests":"Demasiados intentos. Espera unos minutos."}[c]||"No se pudo completar ("+c+")");
+
+/* ---- sesión del cliente ---- */
+onAuthStateChanged(auth,u=>{
+if(uFav){uFav();uFav=null}
+if(!u){admin=false;U="";NOM="";VER=false;D.fav=[];refrescar();return}
+U=u.email;NOM=u.displayName||u.email;VER=u.emailVerified;
+uFav=onSnapshot(doc(db,"usuarios",u.uid),s=>{D.fav=s.exists()?(s.data().fav||[]):[];refrescar()},()=>{});
+refrescar()});
+onSnapshot(datos,s=>{if(s.exists())Object.assign(D,s.data());refrescar()},e=>console.error("Firestore (datos):",e));
+onSnapshot(collection(db,"productos"),s=>{pListo=true;D.productos=s.docs.map(d=>d.data()).sort((a,b)=>a.id-b.id);refrescar()},e=>console.error("Firestore (productos):",e));
+
+window.enviarAuth=async()=>{const c=$("aM").value.trim().toLowerCase(),pw=$("aP").value;
+if(!c.includes("@")||pw.length<6)return msj("Escribe un correo válido y una contraseña de 6+ caracteres");
+try{
+if(modo=="reg"){const n=$("aN").value.trim();if(!n)return msj("Escribe tu nombre");
+const cr=await createUserWithEmailAndPassword(auth,c,pw);
+await updateProfile(cr.user,{displayName:n});NOM=n;
+await setDoc(doc(db,"usuarios",cr.user.uid),{n,correo:c,fav:[]});
+await sendEmailVerification(cr.user);$("aP").value="";refrescar();
+return abrirAuth("ver","Te enviamos un correo a "+c+". Abre el enlace de verificación y luego pulsa «Ya verifiqué mi correo».")}
+const cr=await signInWithEmailAndPassword(auth,c,pw);await cr.user.reload();VER=cr.user.emailVerified;$("aP").value="";refrescar();
+if(!VER)return abrirAuth("ver","Aún no verificas tu correo. Abre el enlace que te enviamos o pide uno nuevo.");
+cerrarM("auth");if(irPago){irPago=false;abrirPago()}
+}catch(x){msj(errAuth(x.code))}};
+window.reenviar=async()=>{try{await sendEmailVerification(auth.currentUser);msj("Correo reenviado. Revisa también el spam.",true)}catch(x){msj(errAuth(x.code))}};
+window.yaVerifique=async()=>{const u=auth.currentUser;if(!u)return;await u.reload();await u.getIdToken(true);VER=u.emailVerified;
+if(!VER)return msj("Todavía no aparece verificado. Abre el enlace del correo y vuelve a intentarlo.");
+cerrarM("auth");refrescar();if(irPago){irPago=false;abrirPago()}};
+window.olvide=async()=>{const c=$("aM").value.trim();if(!c.includes("@"))return msj("Escribe tu correo arriba y pulsa de nuevo");
+try{await sendPasswordResetEmail(auth,c);msj("Si el correo tiene cuenta, te enviamos un enlace para cambiar la contraseña.",true)}catch(x){msj(errAuth(x.code))}};
+window.salirC=()=>signOut(auth);
+window.guardarFav=id=>{const f=D.fav.includes(id)?D.fav.filter(x=>x!=id):[...D.fav,id];setDoc(doc(db,"usuarios",auth.currentUser.uid),{fav:f},{merge:true}).catch(fail)};
+
+/* ---- pedido: descuenta stock y guarda la compra en una sola operación ---- */
+window.crearPedido=async(info,carro)=>{const u=auth.currentUser;if(!u)throw new Error("Inicia sesión para comprar");
+await u.reload();await u.getIdToken(true);if(!u.emailVerified)throw new Error("Verifica tu correo antes de comprar");
+const pref=doc(collection(db,"pedidos"));
+return runTransaction(db,async tx=>{const lin=[];let total=0;
+for(const k of Object.keys(carro)){const r=P(k),s=await tx.get(r);if(!s.exists())throw new Error("Un producto ya no está disponible");
+const p=s.data(),q=carro[k];if(p.stock<q)throw new Error("Stock insuficiente de "+p.nombre+" (quedan "+p.stock+")");
+lin.push({r,stock:p.stock-q,txt:`${q} x ${p.nombre} - S/ ${(p.precio*q).toFixed(2)}`});total+=p.precio*q}
+lin.forEach(l=>tx.update(l.r,{stock:l.stock}));
+const items=lin.map(l=>l.txt);
+tx.set(pref,{...info,uid:u.uid,correo:u.email,items,total:total.toFixed(2),ts:Date.now(),fecha:new Date().toLocaleString("es-PE"),estado:"Pendiente"});
+return{items,total:total.toFixed(2),num:pref.id.slice(0,6).toUpperCase()}})};
+
+/* ---- administrador ---- */
+async function sembrar(){const b=writeBatch(db),{frase,sub,sobre,yape,whatsapp,canal,ubic,ig,fb,tt,cats,slides}=base;
+b.set(datos,{frase,sub,sobre,yape,whatsapp,canal,ubic,ig,fb,tt,cats,slides});base.productos.forEach(p=>b.set(P(p.id),p));await b.commit()}
+window.entrar=async()=>{const e=$("lE").value.trim().toLowerCase(),p=$("clave").value,m=t=>$("eL").textContent=t;
+if(!e||!p)return m("Escribe tu correo y contraseña");
+try{await signInWithEmailAndPassword(auth,e,p)}catch(x){return m("Correo o contraseña incorrectos")}
+try{await setDoc(doc(db,"tienda","sesion"),{t:Date.now()})}catch(x){await signOut(auth);return m("Esta cuenta no es de administrador (o las reglas no están publicadas)")}
+admin=true;cerrarM("login");$("ad").style.display="block";
+uPed=onSnapshot(collection(db,"pedidos"),s=>{D.pedidos=s.docs.map(d=>({...d.data(),id:d.id})).sort((a,b)=>b.ts-a.ts);refrescar()},e=>console.error("pedidos:",e));
+uUsu=onSnapshot(collection(db,"usuarios"),s=>{D.cuentas=s.size;refrescar()},e=>console.error("usuarios:",e));
+const f=([k,l])=>`<p style="margin:10px 0 2px">${l}</p><input id="c_${k}" value="${esc(D[k])}">`;
+$("campP").innerHTML=CP.map(f).join("");$("campT").innerHTML=CT.map(f).join("");
+if(pListo&&!D.productos.length)await sembrar().catch(fail);dAd();tab("res")};
+window.salirAd=()=>{$("ad").style.display="none";if(uPed)uPed();if(uUsu)uUsu();uPed=uUsu=null;D.pedidos=[];D.cuentas=0;signOut(auth);pintar()};
+window.estadoPed=(id,v)=>updateDoc(doc(db,"pedidos",id),{estado:v}).catch(fail);
+window.save=()=>{if(admin)setDoc(datos,{slides:D.slides},{merge:true}).catch(fail)};
+window.guardarCampos=()=>{const o={};[...CP,...CT].forEach(([k])=>o[k]=$("c_"+k).value.trim());o.whatsapp=o.whatsapp.replace(/\D/g,"");
+setDoc(datos,o,{merge:true}).then(()=>toast("✓ Guardado")).catch(fail)};
+window.addCat=()=>{const v=$("nc").value.trim();if(!v||D.cats.includes(v))return;$("nc").value="";setDoc(datos,{cats:[...D.cats,v]},{merge:true}).catch(fail)};
+window.delCat=i=>{const c=D.cats[i];setDoc(datos,{cats:D.cats.filter((_,j)=>j!=i)},{merge:true}).catch(fail);
+D.productos.filter(p=>p.cat==c).forEach(p=>updateDoc(P(p.id),{cat:""}).catch(fail))};
+window.addProd=()=>{const n=$("nN").value.trim();if(!n)return alert("Escribe un nombre");const id=Date.now();
+setDoc(P(id),{id,nombre:n,precio:parseFloat($("nP").value)||0,stock:parseInt($("nS").value)||0,icono:$("nI").value.trim()||"🎁",img:"",desc:"",cat:"",dest:false}).catch(fail);
+["nN","nP","nS","nI"].forEach(i=>$(i).value="")};
+window.ed=(id,k,v)=>{if(k=="precio")v=Math.max(0,parseFloat(v)||0);if(k=="stock")v=Math.max(0,parseInt(v)||0);updateDoc(P(id),{[k]:v}).catch(fail)};
+window.borrar=id=>{if(confirm("¿Eliminar este producto?"))deleteDoc(P(id)).catch(fail)};
+</script>
+</body></html>
